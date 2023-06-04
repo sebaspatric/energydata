@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Datos de la Persona</title>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    </head>
+    <body>
+        <header th:replace="layout/plantilla :: header"></header>
+
+        <div class="container">
+            <h2>[[#{persona.formulario}]]</h2>
+            <a th:href="@{/}" class="btn btn-primary">[[#{accion.regresar}]]</a>
+            <br/>
+            <form th:action="@{/guardar}" method="post" th:object="${persona}" class="my-4">
+                <input type="hidden" name="idPersona" th:field="*{idPersona}"/>
+                <br/>
+                <div class="form-group">
+                    <label for="nombre">[[#{persona.nombre}]]:</label>
+                    <input type="text" name="nombre" th:field="*{nombre}" class="form-control"/>
+                    <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger">Error Nombre</span>
+                </div>
+                <div class="form-group">
+                    <label for="apellido">[[#{persona.apellido}]]:</label>
+                    <input type="text" name="apellido" th:field="*{apellido}" class="form-control"/>
+                    <span th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}" class="text-danger">Error Apellido</span>
+                </div>
+                <div class="form-group">
+                    <label for="email">[[#{persona.email}]]:</label>
+                    <input type="text" name="email" th:field="*{email}" class="form-control"/>
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger">Error Email</span>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">[[#{persona.telefono}]]:</label>
+                    <input type="tel" name="telefono" th:field="*{telefono}" class="form-control"/>
+                </div>
+                <input type="submit" name="guardar" th:value="#{accion.guardar}" class="btn btn-primary"/>
+            </form>
+        </div>
+
+        <footer th:replace="layout/plantilla :: footer"></footer>
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+</html>

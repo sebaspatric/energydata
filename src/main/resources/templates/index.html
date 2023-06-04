@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace="layout/plantilla :: head">
+        <title>Inicio</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    </head>
+    <body>
+
+        <header th:replace="layout/plantilla :: header"></header>
+
+        <section id="descripcion" class="py-5 bg-light">
+            <div class="container">
+                <h3 class="text-center">Transformando la forma en que gestionas tu energía</h3>
+
+                <p class="text-center">En EnergyData, nos apasiona ayudar a nuestros clientes a optimizar su consumo energético y reducir costos mediante soluciones de gestión energética inteligente.</p>
+                <p class="text-center">Nuestro equipo de expertos en energía y tecnología trabaja para brindar soluciones innovadoras que te permitan tener un control total sobre tus recursos energéticos.</p>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3 text-center">
+                        <img src="https://cdn.pixabay.com/photo/2022/05/16/15/25/traffic-7200606_1280.jpg" alt="Descripción de la imagen" class="img-fluid">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section id="valores" class="py-5">
+            <div class="container">
+                <h3 class="text-center">Nuestros Valores</h3>
+                <ul class="list-group list-group-horizontal justify-content-center">
+                    <li class="list-group-item"><i class="fas fa-check"></i> Eficiencia energética</li>
+                    <li class="list-group-item"><i class="fas fa-check"></i> Sostenibilidad</li>
+                    <li class="list-group-item"><i class="fas fa-check"></i> Tecnología avanzada</li>
+                    <li class="list-group-item"><i class="fas fa-check"></i> Innovación</li>
+                    <li class="list-group-item"><i class="fas fa-check"></i> Compromiso con el cliente</li>
+                </ul>
+            </div>
+        </section>
+
+        <div th:if="${personas == null or personas.empty}">
+            [[#{persona.lista-vacia}]]
+        </div>
+
+        <footer th:replace="layout/plantilla :: footer"></footer>
+
+    </body>
+</html>
