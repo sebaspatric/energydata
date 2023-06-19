@@ -8,14 +8,20 @@
         <version>2.2.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>mx.com.gm</groupId>
+    <groupId>ch.com.ed</groupId>
     <artifactId>ControlClentes</artifactId>
     <version>1.0</version>
     <name>ControlClientess12.05.4</name>
     <description>HolaMundo con Spring</description>
 
     <properties>
-        <java.version>13</java.version>
+        <java.version>15</java.version>
+        <!-- 
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        -->
+        <maven.compiler.source>13</maven.compiler.source>
+        <maven.compiler.target>13</maven.compiler.target>
     </properties>
 
     <dependencies>

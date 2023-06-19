@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" 
       xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>Datos de la Persona</title>
+        <title>Datos de Usuario</title>
         <meta charset="UTF-8"/>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     </head>
@@ -10,8 +10,8 @@
         <header th:replace="layout/plantilla :: header"></header>
 
         <div class="container">
-            <h2>[[#{persona.formulario}]]</h2>
-            <a th:href="@{/control}" class="btn btn-primary">[[#{accion.regresar}]]</a>
+            <h2>[[#{usuario.formulario}]]</h2>
+            <a th:href="@{/login}" class="btn btn-primary">[[#{accion.regresar}]]</a>
             <br/>
             <form th:action="@{/guardar}" method="post" th:object="${persona}" class="my-4">
                 <input type="hidden" name="idPersona" th:field="*{idPersona}"/>

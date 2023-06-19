@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace="layout/plantilla :: head">
+        <title>Listado de Vuelos</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    </head>
+    <body>
+
+        <header th:replace="layout/plantilla :: header"></header>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/agregar2}" class="btn btn-primary">Agregar Vuelo</a>
+
+        <div th:if="${vuelosAgrupados != null and !vuelosAgrupados.empty}">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>
+                            <a href="/control6" style="text-decoration: none; color: white;">Destino</a>
+                        </th>
+                        <th>cant vuelos</th>
+                        <th>Latitud</th>
+                        <th>Longitud</th>
+                        <th>
+                            <a href="/control7" style="text-decoration: none; color: white;">Pasajeros Aeropuerto</a>
+                        </th>
+                        <th>
+                            <a href="/control8" style="text-decoration: none; color: white;">Comb. ult. 100 PROM</a>
+                        </th>
+                        <th>
+                            <a href="/control9" style="text-decoration: none; color: white;">Pasajeros PROM</a>
+                        </th>
+                        <th sec:authorize="hasRole('ROLE_ADMIN')">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="vuelo : ${vuelosAgrupados}">
+                        <td th:text="${vuelo[0]}">Aeropuerto de origen</td>
+                        <td th:text="${vuelo[1]}">Cantidad de vuelos</td>
+                        <td th:text="${vuelo[2]}">Promedio de Consumo</td>
+                        <td th:text="${vuelo[3]}">Promedio de Consumo</td>
+                        <td th:text="${vuelo[4]}">Promedio de Consumo</td>
+                        <td th:text="${vuelo[5]}">Promedio de Consumo</td>
+                        <td th:text="${vuelo[6]}">Promedio de Consumo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${vuelosAgrupados == null or vuelosAgrupados.empty}">
+            <p>No hay vuelos disponibles.</p>
+        </div>
+
+        <footer th:replace="layout/plantilla :: footer"></footer>
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+</html>

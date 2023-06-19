@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Datos de la Persona</title>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">   
+            <!--         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+ -->
+    
+    </head>
+    <body>
+        <header th:replace="layout/plantilla :: header"></header>
+
+        <main class="container mt-4">
+            <h1>Registro de Vuelo</h1>
+            <b></b>
+            <b></b>
+            <br>
+
+            <form>
+                <div class="mb-3">
+                    <label for="ruta" class="form-label">Ruta del vuelo</label>
+                    <input type="text" class="form-control" id="ruta" placeholder="Ingrese la ruta del vuelo" required>
+                </div>
+                <div class="mb-3">
+                    <label for="carga-pasajeros" class="form-label">Carga de pasajeros</label>
+                    <input type="number" class="form-control" id="carga-pasajeros" placeholder="Ingrese la carga de pasajeros" required>
+                </div>
+                <div class="mb-3">
+                    <label for="carga" class="form-label">Carga</label>
+                    <input type="number" class="form-control" id="carga" placeholder="Ingrese la carga" required>
+                </div>
+                <div class="mb-3">
+                    <label for="datos-meteorologicos" class="form-label">Datos meteorológicos</label>
+                    <textarea class="form-control" id="datos-meteorologicos" placeholder="Ingrese los datos meteorológicos"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Registrar Vuelo</button>
+            </form>
+        </main>
+
+        <footer th:replace="layout/plantilla :: footer"></footer>
+        <!--         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    </body>
+</html>

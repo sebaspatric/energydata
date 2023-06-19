@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace="layout/plantilla :: head">
+        <title>Listado de Vuelos</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    </head>
+    <body>
+
+        <header th:replace="layout/plantilla :: header"></header>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/agregar2}" class="btn btn-primary">Agregar Vuelo</a>
+
+        <div th:if="${vuelos != null and !vuelos.empty}">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+
+                        <th>Ruta de Vuelo</th>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Carga de Pasajeros</th>
+                        <th>Carga</th>
+                        <th><a th:href="@{/vuelos}" class="nav-link active" >Combustible Últimos 100</a></th>
+                        
+                        <th>Datos Meteorológicos</th>
+                        <th sec:authorize="hasRole('ROLE_ADMIN')">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="vuelo : ${vuelos}">
+                        <td th:text="${vuelo.rutaVuelo}">ruraVuelo</td>
+                        <td th:text="${vuelo.origen.codigo}">Origen</td>
+                        <td th:text="${vuelo.destino.codigo}">Destino</td>
+                        <td th:text="${vuelo.cargaPasajeros}">Carga de Pasajeros</td>
+                        <td th:text="${vuelo.carga}">Carga</td>
+                        <td th:text="${vuelo.consumoUltimos100}">Combustible Últimos 100</td>
+                        <td th:text="${vuelo.datosMeteorologicos}">Datos Meteorológicos</td>
+                        <!-- 
+                        
+                        
+                        comment -->
+                        
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${vuelos == null or vuelos.empty}">
+            <p>No hay vuelos disponibles.</p>
+        </div>
+
+
+
+
+        <footer th:replace="layout/plantilla :: footer"></footer>
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+</html>
