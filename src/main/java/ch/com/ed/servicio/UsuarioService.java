@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class UsuarioService implements UserDetailsService{
 
+    // con esta clase vamos a interactuar con los usuarios y roles
     @Autowired
     private UsuarioDao usuarioDao;
     
@@ -31,12 +32,14 @@ public class UsuarioService implements UserDetailsService{
             throw new UsernameNotFoundException(username);
         }
         
+        //si encontramos el usuario recuperamos los roles
+        //se crea los roles de springsecurity con jpa
         var roles = new ArrayList<GrantedAuthority>();
         
         for(Rol rol: usuario.getRoles()){
             roles.add(new SimpleGrantedAuthority(rol.getNombre()));
         }
-        
+        // User clase de Springframework
         return new User(usuario.getUsername(), usuario.getPassword(), roles);
     }
     

@@ -29,8 +29,9 @@
                         <td th:text="${persona.nombre}">Mostrar Nombre</td>
                         <td th:text="${persona.apellido}">Mostrar Apellido</td>
                         <td th:text="${persona.email}">Mostrar Email</td>
-                        <td th:text="${persona.telefono}">Mostrar Teléfono</td>
+                        <td th:text="${persona.telefono}">Mostrar Teléfono</td>            <!-- atributo id asignado para el path editar -->
                         <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/editar/} + ${persona.idPersona}" class="btn btn-primary">[[#{accion.editar}]]</a></td>
+                        <!-- al pasar idPersonaa como queryparametro se pasa como valor del objeto establecido -->
                         <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/eliminar(idPersona=${persona.idPersona})}" class="btn btn-danger">[[#{accion.eliminar}]]</a></td>
                     </tr>
                 </tbody>

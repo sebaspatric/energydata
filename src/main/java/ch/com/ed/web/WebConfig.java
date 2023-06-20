@@ -32,6 +32,8 @@ public class WebConfig implements WebMvcConfigurer{
         registro.addInterceptor(localeChangeInterceptor());
     }
     
+    //sobreescribimos el metodo de vista controller
+    //mapear paths que no necesariamente pasan por el path
     @Override
     public void addViewControllers(ViewControllerRegistry registro){
         registro.addViewController("/").setViewName("index");

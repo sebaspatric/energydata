@@ -29,7 +29,7 @@ public class ControladorInicio {
         return "index";
     }
     
-    @GetMapping("/control")
+    @GetMapping("/control")             //recuperar el usuario que hizo login
     public String control(Model model, @AuthenticationPrincipal User user){
         var personas = personaService.listarPersonas();
         log.info("ejecutando el controlador Spring MVC");
@@ -37,7 +37,7 @@ public class ControladorInicio {
         model.addAttribute("personas", personas);
         return "control";
     }
-    
+    // muestra planilla para agregar
     @GetMapping("/agregar")
     public String agregar(Persona persona){
         return "modificar";
@@ -56,6 +56,8 @@ public class ControladorInicio {
     public String registrov(Persona persona){
         return "registrov";
     }    
+    
+    // guarda la persona CRUD
     @PostMapping("/guardar")
     public String guardar(@Valid Persona persona, Errors errores){
         if(errores.hasErrors()){
@@ -65,21 +67,28 @@ public class ControladorInicio {
         return "redirect:/control";
     }
     
+    // nuevo registro
     @PostMapping("/registroguardar")
     public String registroguardar(@Valid Persona persona, Errors errores){
+        //verifica errores
         if(errores.hasErrors()){
             return "modificar";
         }
         personaService.guardar(persona);
         return "redirect:/control";
     }
+    
+    // muestra el formulario para editar
     @GetMapping("/editar/{idPersona}")
+        // en spring no es necesario inicializar el objeto ni hacerse con el prametro id.. lo asocia automatico
     public String editar(Persona persona, Model model){
         persona = personaService.encontrarPersona(persona);
         model.addAttribute("persona", persona);
-        return "modificar";
+        return "modificar"; // vista sirve para agregar y editar
     }
     
+    //@GetMapping("/eliminar/{idPersona}")
+    // se paasa el id como query parametro en la vista
     @GetMapping("/eliminar")
     public String eliminar(Persona persona){
         personaService.eliminar(persona);

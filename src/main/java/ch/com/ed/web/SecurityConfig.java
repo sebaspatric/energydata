@@ -29,7 +29,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+    
+        //llamar metodos de manera concatenada para crear usuario
         http.authorizeRequests()
+                             // path metodos restringidos
                 .antMatchers("/editar/**", "/agregar/**", "/eliminar")
                 .hasRole("ADMIN")
                 .antMatchers("/")

@@ -23,6 +23,7 @@ import static org.mockito.Mockito.*;
 
 public class VueloServiceImplTest {
 
+    //crea una instancia temporal para las pruebas
     @Mock
     private VueloDao vueloDao;
 

@@ -12,11 +12,12 @@
         <div class="container">
             <h2>[[#{persona.formulario}]]</h2>
             <a th:href="@{/control}" class="btn btn-primary">[[#{accion.regresar}]]</a>
-            <br/>
+            <br/>                          <!-- recuoera el bjeto de tipo persona del respositorio -->
             <form th:action="@{/guardar}" method="post" th:object="${persona}" class="my-4">
+               <!-- campo oculto para especificar el idpersona asociado * al atributo -->
                 <input type="hidden" name="idPersona" th:field="*{idPersona}"/>
                 <br/>
-                <div class="form-group">
+                <div class="form-group"> 
                     <label for="nombre">[[#{persona.nombre}]]:</label>
                     <input type="text" name="nombre" th:field="*{nombre}" class="form-control"/>
                     <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger">Error Nombre</span>

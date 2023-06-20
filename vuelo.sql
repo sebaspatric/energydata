@@ -145,7 +145,54 @@ order by
 vuelo.consumo_ultimos_100 desc
 ;
 
-SELECT aeropuerto.codigo AS aeropuerto_destino, SUM(vuelo.consumo_ultimos_100) AS suma_combustible
+SELECT aeropuerto.AEROPUERTO AS aeropuerto_destino, AVG(vuelo.consumo_ultimos_100) AS PROM_combustible
 FROM vuelo
 JOIN aeropuerto ON vuelo.destino_codigo = aeropuerto.codigo
+GROUP BY aeropuerto_destino
+HAVING PROM_combustible > 163
+;
+
+SELECT aeropuerto.AEROPUERTO AS aeropuerto_destino, AVG(vuelo.consumo_ultimos_100) AS PROM_combustible
+FROM vuelo
+JOIN aeropuerto WHERE vuelo.destino_codigo = aeropuerto.codigo
 GROUP BY aeropuerto_destino;
+-- consulta
+/*
+
+select
+        aeropuerto1_.aeropuerto as col_0_0_,
+        count(vuelo0_.id_vuelo) as col_1_0_,
+        aeropuerto1_.latitud as col_2_0_,
+        aeropuerto1_.longitud as col_3_0_,
+        aeropuerto1_.pax_total as col_4_0_,
+        avg(vuelo0_.consumo_ultimos_100) as col_5_0_,
+        avg(vuelo0_.carga_pasajeros) as col_6_0_ 
+    from
+        vuelo vuelo0_ cross 
+    join
+        aeropuerto aeropuerto1_ 
+    where
+        vuelo0_.destino_codigo=aeropuerto1_.codigo 
+    group by
+        vuelo0_.destino_codigo 
+    order by
+        aeropuerto1_.aeropuerto ASC
+*/
+select
+        aeropuerto as col_0_0_,
+        count(vuelo0_.id_vuelo) as col_1_0_,
+        aeropuerto1_.latitud as col_2_0_,
+        aeropuerto1_.longitud as col_3_0_,
+        aeropuerto1_.pax_total as col_4_0_,
+        avg(vuelo0_.consumo_ultimos_100) as col_5_0_,
+        avg(vuelo0_.carga_pasajeros) as col_6_0_ 
+    from
+        vuelo vuelo0_ cross 
+    join
+        aeropuerto aeropuerto1_ 
+    where
+        vuelo0_.destino_codigo=aeropuerto1_.codigo 
+    group by
+        vuelo0_.destino_codigo 
+    order by
+        aeropuerto1_.aeropuerto ASC
