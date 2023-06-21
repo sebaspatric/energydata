@@ -28,4 +28,8 @@ public class Persona implements Serializable{
     private String email;
     
     private String telefono;
+    
+    @Column(name = "contrasena")
+    private String contrasena;
+    
 }

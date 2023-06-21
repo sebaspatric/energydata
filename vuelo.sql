@@ -1,6 +1,6 @@
 -- vuelo
-
-use test;
+show tables;
+use test;	
 
 /*
 drop table if exists vuelo;
@@ -24,10 +24,16 @@ CREATE TABLE if not exists aeropuerto (
   AEROPUERTO VARCHAR(100),
   PAX_TOTAL DECIMAL(10, 2),
   CARGA_TOTA DECIMAL(10, 2),
-  coordinates text (50)
+  type text(45),
+  coordinates text (200)
   -- longitud DECIMAL(10, 8), 
   -- latitud DECIMAL(11, 8)
-);
+);	
+
+select*from aeropuerto;
+truncate table aeropuerto;
+
+
 /*
 CREATE TABLE if not exists aeropuerto (
   codigo VARCHAR(10) PRIMARY KEY not null,
@@ -55,16 +61,54 @@ SET longitud = CAST(SUBSTRING_INDEX(@longitud, ',', 0) AS DECIMAL(10, 8)),
     latitud = CAST(SUBSTRING_INDEX(@latitud, ',', 1) AS DECIMAL(10, 8));
   
 */
+
+/*
+
+drop table if exists t;
+create table t(col1 varchar(20),col2 varchar(100), col3 varchar(20), col4 varchar(20),col5 varchar(100),  col6 varchar(100),  col7 varchar(100));
+
+truncate table t;
+
+load data infile 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\flightsArizona_2015.csv' into table t LINES TERMINATED BY '\r\n' (@var1)
+
+    set col1 = substring_index(@var1,',',1),
+    col2 = substring_index(substring_index(@var1,',',2),',',-1),
+    col3 = substring_index(substring_index(@var1,',',3),',',-1),
+    col4 = substring_index(substring_index(@var1,',',4),',',-1),
+    col5 = substring_index(substring_index(@var1,',',5),',',-1),
+	col6 = substring_index(substring_index(@var1,',',6),',',-1),
+    col7 = concat('[',(substring_index(@var1,'[',-1)))
+    -- col6 = concat('[',(substring_index(@var1,'[',-1)))
+
+;
+select*from t;
+
+
+*/
+	
+
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\flightsArizona_2015.csv'
+INTO TABLE aeropuerto
+FIELDS TERMINATED BY ','
+enclosed by '"'
+lines terminated by '\r\n'
+IGNORE 1 ROWS
+(codigo,AEROPUERTO,PAX_TOTAL,CARGA_TOTA,type,coordinates)
+;	
   
 SHOW VARIABLES LIKE "secure_file_priv";
 SET GLOBAL LOCAL_INFILE=TRUE;
 SHOW GLOBAL VARIABLES LIKE 'local_infile';
+
+/*
 LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\flightsArizona_2015.csv'
 INTO TABLE aeropuerto
 FIELDS TERMINATED BY ','
 optionally enclosed by '"'
 lines terminated by '\r\n'
 IGNORE 1 ROWS;
+
+*/
 
 SHOW VARIABLES LIKE 'secure_file_priv';
 
@@ -75,12 +119,12 @@ FROM aeropuerto;
 ALTER TABLE aeropuerto
 ADD COLUMN longitud DECIMAL(10, 8),
 ADD COLUMN latitud DECIMAL(11, 8);
-
+select*from aeropuerto;
 INSERT INTO aeropuerto (longitud, latitud)
 SELECT SUBSTRING_INDEX(SUBSTRING_INDEX(coordinates, ',', 1), '[', -1) AS longitud,
        SUBSTRING_INDEX(SUBSTRING_INDEX(coordinates, ',', -1), ']', 1) AS latitud
 FROM aeropuerto;
-
+select*from aeropuerto;
 UPDATE aeropuerto
 SET longitud = SUBSTRING_INDEX(SUBSTRING_INDEX(coordinates, ',', 1), '[', -1),
     latitud = SUBSTRING_INDEX(SUBSTRING_INDEX(coordinates, ',', -1), ']', 1)

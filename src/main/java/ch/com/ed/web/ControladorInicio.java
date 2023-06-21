@@ -7,6 +7,7 @@ import ch.com.ed.servicio.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @Slf4j
 public class ControladorInicio {
+    
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
     
     @Autowired
     private PersonaService personaService;
@@ -63,6 +67,9 @@ public class ControladorInicio {
         if(errores.hasErrors()){
             return "modificar";
         }
+        // Encriptar la contraseña antes de guardarla
+        //String contrasenaEncriptada = passwordEncoder.encode(persona.getContrasena());
+        //persona.setContrasena(contrasenaEncriptada);
         personaService.guardar(persona);
         return "redirect:/control";
     }

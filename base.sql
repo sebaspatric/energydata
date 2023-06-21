@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS test2;
-USE test2;
+USE test;
 
 drop table usuario;
 CREATE TABLE usuario (
@@ -25,15 +25,16 @@ CREATE TABLE rol (
 );
 
 
-
-CREATE TABLE if not exists `test2`.`persona` (
+drop table persona;
+CREATE TABLE if not exists `test`.`persona` (
   `id_persona` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL,
   `apellido` VARCHAR(45) NULL,
   `email` VARCHAR(45) NULL,
   `telefono` VARCHAR(45) NULL,
   PRIMARY KEY (`id_persona`));
-
+  
+alter table persona add column contrasena VARCHAR(128) NULL;
 -- crear mis tablas ---------------------------------------------
 
 /*
@@ -153,17 +154,17 @@ INSERT INTO `test2`.`persona` (`nombre`, `apellido`, `email`, `telefono`) VALUES
 INSERT INTO `test2`.`persona` (`nombre`, `apellido`, `email`, `telefono`) VALUES ('Carlos', 'Lara ', 'clara@mail.com', '33221144');
 
 
-INSERT INTO `test2`.`usuario` (`username`, `password`) VALUES ('admin', '123');
-INSERT INTO `test2`.`usuario` (`username`, `password`) VALUES ('user', '123');
+INSERT INTO `test`.`usuario` (`username`, `password`) VALUES ('admin', '123');
+INSERT INTO `test`.`usuario` (`username`, `password`) VALUES ('user', '123');
+update usuario set username = 'admin';
+
+INSERT INTO `test`.`rol` (`nombre`, `id_usuario`) VALUES ('ROLE_ADMIN', '1');
+INSERT INTO `test`.`rol` (`nombre`, `id_usuario`) VALUES ('ROLE_USER', '1');
+INSERT INTO `test`.`rol` (`nombre`, `id_usuario`) VALUES ('ROLE_USER', '2');	
 
 
-INSERT INTO `test2`.`rol` (`nombre`, `id_usuario`) VALUES ('ROLE_ADMIN', '1');
-INSERT INTO `test2`.`rol` (`nombre`, `id_usuario`) VALUES ('ROLE_USER', '1');
-INSERT INTO `test2`.`rol` (`nombre`, `id_usuario`) VALUES ('ROLE_USER', '2');
-
-
-UPDATE `test2`.`usuario` SET `password` = '$2a$10$MMyCa9vKGG.LvseRZLG7CupjzV4i1l8EoHOKcT29IRZX6jnwRrnZC' WHERE (`id_usuario` = '1');
-UPDATE `test2`.`usuario` SET `password` = '$2a$10$6VA2ZoSpiwq6CyJrQko4BuZKUOOUVMytfHAPrE9VteOXrie6pVwu6' WHERE (`id_usuario` = '2');
+UPDATE `test`.`usuario` SET `password` = '$2a$10$MMyCa9vKGG.LvseRZLG7CupjzV4i1l8EoHOKcT29IRZX6jnwRrnZC' WHERE (`id_usuario` = '1');
+UPDATE `test`.`usuario` SET `password` = '$2a$10$6VA2ZoSpiwq6CyJrQko4BuZKUOOUVMytfHAPrE9VteOXrie6pVwu6' WHERE (`id_usuario` = '2');
 
 /*
 ALTER TABLE `test2`.`persona` 
@@ -184,3 +185,93 @@ UPDATE `test`.`persona` SET `saldo` = '0' WHERE (`id_persona` = '12');
 UPDATE `test`.`persona` SET `saldo` = '0' WHERE (`id_persona` = '13');
 UPDATE `test`.`persona` SET `saldo` = '0' WHERE (`id_persona` = '14');
 */
+
+ALTER TABLE usuario
+ADD id_persona INT;
+
+/*
+ALTER TABLE usuario
+DROP FOREIGN KEY fk_usuario_persona;
+ALTER TABLE usuario
+DROP COLUMN id_persona;	
+
+ALTER TABLE usuario
+ADD CONSTRAINT fk_usuario_persona
+FOREIGN KEY (id_persona)
+REFERENCES persona(id_persona);
+
+
+
+ALTER TABLE usuario
+ADD id_persona INT;
+ALTER TABLE usuario
+DROP FOREIGN KEY fk_usuario_persona;
+ALTER TABLE usuario
+DROP COLUMN id_persona;	
+
+ALTER TABLE persona
+ADD id_usuario INT;
+
+ALTER TABLE persona
+ADD CONSTRAINT fk_persona_usuario
+FOREIGN KEY (id_usuario)
+REFERENCES usuario(id_usuario);
+ALTER TABLE persona
+DROP FOREIGN KEY fk_persona_usuario;
+ALTER TABLE persona
+DROP COLUMN id_usuario;	
+
+
+UPDATE usuario
+SET id_persona = (SELECT id_persona FROM persona WHERE SUBSTRING_INDEX(email, '@', 1) = usuario.username);
+
+ALTER TABLE usuario DROP FOREIGN KEY fk_usuario_persona;
+alter table usuario drop CONSTRAINT fk_usuario_persona;
+ALTER TABLE usuario
+ADD CONSTRAINT fk_usuario_persona
+FOREIGN KEY (id_persona)
+REFERENCES persona(id_persona)
+ON DELETE CASCADE;	
+
+
+ALTER TABLE usuario
+DROP CONSTRAINT nombre_restriccion,
+ADD CONSTRAINT nombre_restriccion
+FOREIGN KEY (columna_referencia)
+REFERENCES nombre_tabla_referencia(columna_referencia)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+-- Deshabilitar verificación de llaves foráneas
+SET FOREIGN_KEY_CHECKS = 0;
+-- Mostrar restricciones de clave externa
+SELECT CONSTRAINT_NAME, COLUMN_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME
+FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+WHERE TABLE_NAME = 'usuario' AND CONSTRAINT_NAME != 'PRIMARY';
+
+
+ALTER TABLE usuario
+-- DROP CONSTRAINT nombre_restriccion,
+ADD CONSTRAINT nombre_restriccion
+FOREIGN KEY (columna_referencia)
+REFERENCES nombre_tabla_referencia(columna_referencia)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+
+ALTER TABLE usuario
+DROP COLUMN id_persona;
+ALTER TABLE usuario
+ADD COLUMN id_persona INT;
+
+SHOW INDEX FROM usuario;
+DROP INDEX fk_usuario_persona ON usuario;	
+
+*/
+
+ALTER TABLE usuario
+ADD CONSTRAINT fk_usuario_persona
+FOREIGN KEY (id_persona)
+REFERENCES persona(id_persona)
+ON DELETE SET NULL
+ON UPDATE SET NULL;
