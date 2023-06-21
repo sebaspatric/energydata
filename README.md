@@ -91,6 +91,25 @@ INSERT INTO `test`.`rol` (`nombre`, `id_usuario`) VALUES ('ROLE_USER', '2');
 UPDATE `test`.`usuario` SET `password` = '$2a$10$MMyCa9vKGG.LvseRZLG7CupjzV4i1l8EoHOKcT29IRZX6jnwRrnZC' WHERE (`id_usuario` = '1');
 UPDATE `test`.`usuario` SET `password` = '$2a$10$6VA2ZoSpiwq6CyJrQko4BuZKUOOUVMytfHAPrE9VteOXrie6pVwu6' WHERE (`id_usuario` = '2');
 
+drop table persona;
+CREATE TABLE if not exists `test`.`persona` (
+  `id_persona` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL,
+  `apellido` VARCHAR(45) NULL,
+  `email` VARCHAR(45) NULL,
+  `telefono` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_persona`));
+  
+alter table persona add column contrasena VARCHAR(128) NULL;
+
+ALTER TABLE usuario
+ADD id_persona INT;
+ALTER TABLE usuario
+ADD CONSTRAINT fk_usuario_persona
+FOREIGN KEY (id_persona)
+REFERENCES persona(id_persona)
+ON DELETE SET NULL
+ON UPDATE SET NULL;
 
 -- procedimiento insertar usuario -----------------------------------------------------------------------
 drop procedure InsertarNuevoRegistro;
